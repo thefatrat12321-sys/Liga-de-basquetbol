@@ -4,6 +4,10 @@ Sistema de gestión de una liga de básquetbol: autenticación, equipos, jugador
 
 Este proyecto fue migrado desde una implementación PHP nativa (MVC + PDO) a **Laravel 12**, conservando el diseño visual y todas las funcionalidades originales.
 
+**Vista previa pública (solo lectura):** <https://thefatrat12321-sys.github.io/Liga-de-basquetbol/>
+
+> La vista previa es una copia estática generada desde la base de datos. Para iniciar sesión y modificar datos hay que ejecutar la aplicación en local con **XAMPP + MySQL** (ver [`deploy/xampp/LEEME.md`](deploy/xampp/LEEME.md)).
+
 ---
 
 ## Stack
@@ -12,7 +16,7 @@ Este proyecto fue migrado desde una implementación PHP nativa (MVC + PDO) a **L
 |---|---|
 | Framework | Laravel 12 |
 | Lenguaje | PHP 8.2+ (probado en 8.4) |
-| Base de datos | SQLite (local) / MySQL (producción) |
+| Base de datos | MySQL 8 / MariaDB (XAMPP en local) · SQLite como alternativa |
 | ORM | Eloquent |
 | Vistas | Blade |
 | Estilos | CSS propio en `public/css/style.css` (sin build) |
@@ -22,7 +26,8 @@ Este proyecto fue migrado desde una implementación PHP nativa (MVC + PDO) a **L
 
 ## Requisitos
 
-- PHP 8.2 o superior con las extensiones: `mbstring`, `openssl`, `pdo_sqlite`, `sqlite3` (y `pdo_mysql` si usas MySQL).
+- **XAMPP 8.2+** con Apache y MySQL (o PHP 8.2+ y MySQL instalados por separado).
+- Extensiones PHP: `pdo_mysql`, `mbstring`, `openssl`, `fileinfo`, `zip`.
 - Composer.
 
 Verifica las extensiones con:
@@ -33,20 +38,31 @@ php -m
 
 ---
 
-## Instalación
+## Inicio rápido con XAMPP
 
-```bash
-composer install
+1. Abre el panel de XAMPP y arranca **Apache** y **MySQL**.
+2. Crea la base de datos en <http://localhost/phpmyadmin>:
 
-copy .env.example .env        # Windows
-# cp .env.example .env        # Linux / macOS
+   ```sql
+   CREATE DATABASE liga_basquet CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   ```
 
-php artisan key:generate
-php artisan migrate:fresh --seed
-php artisan serve
-```
+3. Copia el proyecto y configura el entorno:
 
-La aplicación queda disponible en <http://127.0.0.1:8000>.
+   ```bash
+   composer install
+   copy .env.example .env        # Windows
+   # cp .env.example .env        # Linux / macOS
+
+   php artisan key:generate
+   php artisan migrate:fresh --seed
+   php artisan serve
+   ```
+
+4. Abre <http://127.0.0.1:8000>.
+
+La guía completa (extensiones, host virtual `liga.local`, solución de errores) está en
+[`deploy/xampp/LEEME.md`](deploy/xampp/LEEME.md).
 
 ### Credenciales de demostración
 
@@ -68,33 +84,62 @@ El seeder también carga 4 equipos, 8 jugadores y 4 partidos de ejemplo.
 
 ---
 
-## Usar MySQL en lugar de SQLite
+## Vista previa estática (GitHub Pages)
 
-Por defecto `.env` usa SQLite (`DB_CONNECTION=sqlite`), que funciona sin instalar nada. Para usar MySQL:
+GitHub Pages solo sirve archivos estáticos: **no ejecuta PHP ni Laravel**. Por eso el
+sitio público es una copia HTML generada desde la base de datos local:
 
-1. Crea la base de datos:
+```bash
+php artisan liga:preview
+```
 
-   ```sql
-   CREATE DATABASE liga_basquet CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-   ```
+El comando escribe en `docs/`:
 
-2. En `.env`, comenta `DB_CONNECTION=sqlite` y descomenta el bloque de MySQL con tus credenciales:
+```
+docs/
+├── index.html                  Estadísticas + tabla de posiciones
+├── partidos.html               Todos los partidos
+├── partidos-programado.html    Filtro por estado
+├── partidos-en_juego.html
+├── partidos-finalizado.html
+├── partidos-cancelado.html
+├── css/style.css
+└── .nojekyll
+```
 
-   ```dotenv
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=liga_basquet
-   DB_USERNAME=root
-   DB_PASSWORD=tu_password
-   ```
+Para publicarla:
 
-3. Ejecuta:
+1. En GitHub: **Settings → Pages → Source: Deploy from a branch → `main` / `/docs`**.
+2. Cada vez que cambien los datos en local:
 
    ```bash
-   php artisan config:clear
-   php artisan migrate:fresh --seed
+   php artisan liga:preview
+   git add docs
+   git commit -m "actualizar vista previa"
+   git push
    ```
+
+La vista previa **no tiene login, formularios ni botones de edición**: solo muestra la
+tabla y los partidos. Los datos solo se modifican en la instalación local con XAMPP.
+
+---
+
+## Usar SQLite en lugar de MySQL
+
+`.env.example` usa MySQL de XAMPP por defecto. Si no quieres arrancar MySQL:
+
+```dotenv
+DB_CONNECTION=sqlite
+```
+
+Y ejecuta de nuevo:
+
+```bash
+php artisan config:clear
+php artisan migrate:fresh --seed
+```
+
+SQLite no requiere instalar nada más; el archivo se crea en `database/database.sqlite`.
 
 ---
 
@@ -105,6 +150,7 @@ Por defecto `.env` usa SQLite (`DB_CONNECTION=sqlite`), que funciona sin instala
 - **Jugadores**: CRUD por equipo, dorsal único dentro del equipo, posición, edad y altura; filtro por equipo.
 - **Partidos**: programación, filtros por estado y carga de marcador/estado (`programado`, `en_juego`, `finalizado`, `cancelado`).
 - **Estadísticas**: tabla de posiciones (PJ, PG, PP, PF, PC, DIF, Pts) con 2 puntos por victoria y 1 por derrota; promedio de puntos y totales.
+- **Vista previa pública**: exportación estática de solo lectura para GitHub Pages.
 
 ---
 
@@ -112,6 +158,8 @@ Por defecto `.env` usa SQLite (`DB_CONNECTION=sqlite`), que funciona sin instala
 
 ```
 app/
+├── Console/Commands/
+│   └── GenerarPreview.php   Exporta la vista previa estática a docs/
 ├── Http/
 │   ├── Controllers/        Auth, Dashboard, Equipo, Jugador, Partido
 │   └── Requests/           Validación (login, registro, CRUD, marcador)
@@ -121,13 +169,19 @@ app/
 
 database/
 ├── migrations/             Esquema (users, equipos, jugadores, partidos)
-├── seeders/                Datos demo + administrador
+├── seeders/                Datos demo + usuarios por rol
 └── factories/
+
+deploy/
+└── xampp/LEEME.md          Guía de instalación con XAMPP + MySQL
+
+docs/                       Vista previa estática (GitHub Pages)
 
 lang/es/validation.php      Mensajes de validación en español
 resources/views/
-├── layouts/app.blade.php   Layout principal
-├── partials/alerts.blade.php
+├── layouts/app.blade.php   Layout de la aplicación
+├── preview/                Layout y vistas de la versión estática
+├── partials/               Tablas y filtros compartidos
 ├── auth/                   login, register
 ├── equipos/                index, create, edit, _form
 ├── jugadores/              index, create, edit, _form
@@ -162,7 +216,9 @@ public/css/style.css        Diseño (naranja / oscuro)
 php artisan test
 ```
 
-Cobertura actual: autenticación, CRUD de equipos, jugadores (incluido dorsal único por equipo), partidos (incluido empate inválido al finalizar) y cálculo de la tabla de posiciones.
+Resultado actual: **29 pruebas, 103 aserciones**. Cubren autenticación, autorización por
+roles, CRUD de equipos y jugadores, reglas del marcador, cálculo de posiciones y la
+generación de la vista previa estática.
 
 ---
 
@@ -170,15 +226,17 @@ Cobertura actual: autenticación, CRUD de equipos, jugadores (incluido dorsal ú
 
 ```bash
 php artisan migrate:fresh --seed   # Reinicia la BD y carga datos demo
+php artisan liga:preview           # Regenera docs/ para GitHub Pages
 php artisan route:list             # Lista las rutas
 php artisan config:clear           # Limpia la caché de configuración
-composer dev                       # Servidor + queue + logs + vite
 ```
 
 ---
 
 ## Notas de mantenimiento
 
+- El archivo `.env` **no se sube** al repositorio (está en `.gitignore`): cada equipo configura sus credenciales.
 - `config/database.php` debe permanecer en minúsculas (importante al desplegar en Linux).
 - El CSS se sirve directamente desde `public/css/style.css`; no requiere `npm install` ni `npm run build`.
 - La lógica de posiciones vive en `app/Services/StandingsService.php`, separada de los controladores.
+- La vista previa de `docs/` se genera con `php artisan liga:preview`; no editar esos HTML a mano.

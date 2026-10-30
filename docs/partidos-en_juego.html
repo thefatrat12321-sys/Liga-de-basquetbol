@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Partidos · En Juego · Liga de Básquetbol</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">
+        <a href="index.html">🏀 Liga de Básquet</a>
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a href="index.html" class="">
+                Estadísticas / Tabla
+            </a>
+        </li>
+        <li>
+            <a href="partidos.html" class="active">
+                Partidos
+            </a>
+        </li>
+    </ul>
+
+    <div class="nav-user">
+        <span class="user-badge user-badge-readonly">Solo lectura</span>
+        <span class="user-badge">Vista previa</span>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="preview-banner">
+        <strong>Vista previa estática.</strong>
+        Esta copia se genera desde la base de datos local y no permite iniciar sesión ni editar.
+        Para modificar los datos hay que ejecutar la aplicación con XAMPP y MySQL y regenerar la vista previa.
+    </div>
+
+        <div class="page-header">
+        <h1 class="page-title">📅 Partidos de la Liga</h1>
+    </div>
+
+    <div class="card filter-card">
+    <div class="filter-form">
+        <span class="filter-label">Filtrar por estado:</span>
+
+        <a href="partidos.html"
+           class="btn btn-sm btn-secondary">
+            Todos
+        </a>
+
+                    <a href="partidos-programado.html"
+               class="btn btn-sm btn-secondary">
+                Programado
+            </a>
+                    <a href="partidos-en_juego.html"
+               class="btn btn-sm btn-primary">
+                En Juego
+            </a>
+                    <a href="partidos-finalizado.html"
+               class="btn btn-sm btn-secondary">
+                Finalizado
+            </a>
+                    <a href="partidos-cancelado.html"
+               class="btn btn-sm btn-secondary">
+                Cancelado
+            </a>
+            </div>
+</div>
+
+    <div class="card">
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha / Hora</th>
+                    <th class="text-right">Equipo Local</th>
+                    <th class="text-center">Marcador</th>
+                    <th>Equipo Visitante</th>
+                    <th>Lugar / Sede</th>
+                    <th>Estado</th>
+                                    </tr>
+            </thead>
+            <tbody>
+                                    <tr>
+                        <td colspan="6" class="empty-state">
+                            No hay partidos registrados con este estado.
+                        </td>
+                    </tr>
+                            </tbody>
+        </table>
+    </div>
+</div>
+</main>
+
+<footer class="app-footer">
+    Sistema de Gestión de Liga de Básquetbol · Vista previa generada el 30/10/2026 23:25
+</footer>
+
+</body>
+</html>

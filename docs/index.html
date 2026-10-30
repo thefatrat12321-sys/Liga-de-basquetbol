@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Estadísticas · Liga de Básquetbol</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-brand">
+        <a href="index.html">🏀 Liga de Básquet</a>
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a href="index.html" class="active">
+                Estadísticas / Tabla
+            </a>
+        </li>
+        <li>
+            <a href="partidos.html" class="">
+                Partidos
+            </a>
+        </li>
+    </ul>
+
+    <div class="nav-user">
+        <span class="user-badge user-badge-readonly">Solo lectura</span>
+        <span class="user-badge">Vista previa</span>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="preview-banner">
+        <strong>Vista previa estática.</strong>
+        Esta copia se genera desde la base de datos local y no permite iniciar sesión ni editar.
+        Para modificar los datos hay que ejecutar la aplicación con XAMPP y MySQL y regenerar la vista previa.
+    </div>
+
+        <div class="page-header">
+        <h1 class="page-title">📊 Estadísticas de la Liga</h1>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="label">Partidos totales</span>
+            <span class="value">4</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">Finalizados</span>
+            <span class="value">3</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">Programados</span>
+            <span class="value">1</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">Equipos</span>
+            <span class="value">4</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">Jugadores</span>
+            <span class="value">8</span>
+        </div>
+        <div class="stat-card">
+            <span class="label">Promedio de puntos</span>
+            <span class="value">161.7</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">🏆 Tabla de Posiciones</h2>
+        <p class="card-subtitle">2 puntos por victoria, 1 punto por derrota (criterio FIBA).</p>
+
+        <div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Equipo</th>
+                <th class="text-center">PJ</th>
+                <th class="text-center">PG</th>
+                <th class="text-center">PP</th>
+                <th class="text-center">PF</th>
+                <th class="text-center">PC</th>
+                <th class="text-center">DIF</th>
+                <th class="text-center">Pts</th>
+            </tr>
+        </thead>
+        <tbody>
+                            <tr class="leader-row">
+                    <td>1</td>
+                    <td>
+                        <strong>Celtas del Sur</strong>
+                                                    🥇
+                                            </td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">166</td>
+                    <td class="text-center">156</td>
+                    <td class="text-center">+10</td>
+                    <td class="text-center"><strong>4</strong></td>
+                </tr>
+                            <tr class="">
+                    <td>2</td>
+                    <td>
+                        <strong>Halcones Dorados</strong>
+                                            </td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">85</td>
+                    <td class="text-center">78</td>
+                    <td class="text-center">+7</td>
+                    <td class="text-center"><strong>2</strong></td>
+                </tr>
+                            <tr class="">
+                    <td>3</td>
+                    <td>
+                        <strong>Toros Salvajes</strong>
+                                            </td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">146</td>
+                    <td class="text-center">159</td>
+                    <td class="text-center">-13</td>
+                    <td class="text-center"><strong>2</strong></td>
+                </tr>
+                            <tr class="">
+                    <td>4</td>
+                    <td>
+                        <strong>Tiburones Azules</strong>
+                                            </td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">88</td>
+                    <td class="text-center">92</td>
+                    <td class="text-center">-4</td>
+                    <td class="text-center"><strong>1</strong></td>
+                </tr>
+                    </tbody>
+    </table>
+</div>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">📅 Últimos Partidos</h2>
+
+        <div class="table-responsive">
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th class="text-right">Local</th>
+                <th class="text-center">Marcador</th>
+                <th>Visitante</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+                            <tr>
+                    <td>
+                        <strong>05/11/2026</strong><br>
+                        <span class="text-muted">18:30 hrs</span>
+                    </td>
+                    <td class="text-right">Halcones Dorados</td>
+                    <td class="text-center score">
+                        0 - 0
+                    </td>
+                    <td>Tiburones Azules</td>
+                    <td>
+                        <span class="badge badge-programado">
+                            Programado
+                        </span>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>
+                        <strong>22/10/2026</strong><br>
+                        <span class="text-muted">19:00 hrs</span>
+                    </td>
+                    <td class="text-right">Toros Salvajes</td>
+                    <td class="text-center score">
+                        68 - 74
+                    </td>
+                    <td>Celtas del Sur</td>
+                    <td>
+                        <span class="badge badge-finalizado">
+                            Finalizado
+                        </span>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>
+                        <strong>16/10/2026</strong><br>
+                        <span class="text-muted">20:00 hrs</span>
+                    </td>
+                    <td class="text-right">Celtas del Sur</td>
+                    <td class="text-center score">
+                        92 - 88
+                    </td>
+                    <td>Tiburones Azules</td>
+                    <td>
+                        <span class="badge badge-finalizado">
+                            Finalizado
+                        </span>
+                    </td>
+                </tr>
+                            <tr>
+                    <td>
+                        <strong>15/10/2026</strong><br>
+                        <span class="text-muted">18:00 hrs</span>
+                    </td>
+                    <td class="text-right">Halcones Dorados</td>
+                    <td class="text-center score">
+                        85 - 78
+                    </td>
+                    <td>Toros Salvajes</td>
+                    <td>
+                        <span class="badge badge-finalizado">
+                            Finalizado
+                        </span>
+                    </td>
+                </tr>
+                    </tbody>
+    </table>
+</div>
+    </div>
+</main>
+
+<footer class="app-footer">
+    Sistema de Gestión de Liga de Básquetbol · Vista previa generada el 30/10/2026 23:25
+</footer>
+
+</body>
+</html>

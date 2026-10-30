@@ -226,7 +226,8 @@ Route::middleware('can:cargar-resultados')->group(function () {
 - **Eloquent en lugar de SQL manual**: elimina SQL disperso, previene inyección y facilita relaciones y *eager loading*.
 - **Capa de servicio para la tabla**: la lógica FIBA es la parte más delicada del dominio y se prueba de forma aislada.
 - **Nombres de dominio en español**: `equipos`, `jugadores` y `partidos` conservan la terminología del negocio y reducen el riesgo de errores en la migración.
-- **SQLite para desarrollo**: permite ejecutar el proyecto sin instalar un servidor de base de datos; el mismo esquema funciona en MySQL.
+- **MySQL con XAMPP para el entorno local**: reproduce el entorno real de ejecución (MySQL/MariaDB) y permite administrar la base desde phpMyAdmin; SQLite queda como alternativa sin servidor.
+- **Vista previa estática generada por comando**: GitHub Pages no ejecuta PHP, así que `php artisan liga:preview` exporta las vistas reales a HTML de solo lectura, sin duplicar la lógica de presentación.
 - **CSS propio servido desde `public/`**: mantiene el diseño original y evita un paso de build con Node.
 - **Form Requests**: validación declarativa, mensajes centralizados y controladores legibles.
 
@@ -255,6 +256,7 @@ Se implementaron pruebas de funcionalidad con `RefreshDatabase` sobre SQLite en 
 - `PartidoTest`: programación, equipos distintos, carga de marcador y empate inválido.
 - `StandingsTest`: cálculo FIBA y estadísticas generales.
 - `AuthorizationTest`: lectura para `usuario`, resultados para `arbitro` y acceso total del `admin`.
+- `PreviewCommandTest`: genera `docs/` con los datos actuales y sin formularios ni rutas internas.
 
 Ejecución:
 
@@ -262,4 +264,44 @@ Ejecución:
 php artisan test
 ```
 
-Resultado actual: **27 pruebas, 87 aserciones, todas correctas**.
+Resultado actual: **29 pruebas, 103 aserciones, todas correctas**.
+
+---
+
+## 9. Vista previa estática para GitHub Pages
+
+GitHub Pages solo publica archivos estáticos: no ejecuta PHP ni Laravel. Para que el
+repositorio tenga una vista pública sin renunciar a la aplicación real, se añadió el
+comando `app/Console/Commands/GenerarPreview.php`:
+
+```bash
+php artisan liga:preview
+```
+
+El comando:
+
+1. Consulta la base de datos mediante `StandingsService` y Eloquent.
+2. Renderiza las vistas `resources/views/preview/*` reutilizando los partials de las tablas.
+3. Escribe `docs/index.html`, `docs/partidos.html` y una página por cada estado.
+4. Copia `public/css/style.css` a `docs/css/` y crea `docs/.nojekyll`.
+
+Las páginas generadas no incluyen formularios, botones de acción ni enlaces a rutas
+internas (`/login`, `/dashboard`), de modo que la copia pública es estrictamente de
+solo lectura. Los datos se actualizan únicamente ejecutando la aplicación en local y
+regenerando la vista previa antes de hacer `git push`.
+
+---
+
+## 10. Entorno local con XAMPP y MySQL
+
+La guía paso a paso está en `deploy/xampp/LEEME.md`. Resumen:
+
+1. Arrancar Apache y MySQL desde el panel de XAMPP.
+2. Crear la base `liga_basquet` en phpMyAdmin (`utf8mb4_unicode_ci`).
+3. Copiar `.env.example` a `.env` (ya trae `DB_CONNECTION=mysql`, `root` sin contraseña).
+4. Activar `pdo_mysql` en `C:\xampp\php\php.ini`.
+5. `composer install`, `php artisan key:generate`, `php artisan migrate:fresh --seed`.
+6. `php artisan serve` y abrir <http://127.0.0.1:8000>.
+
+El archivo `.env` está excluido del repositorio, por lo que las credenciales y la base de
+datos permanecen solo en el equipo local.
