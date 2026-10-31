@@ -7,7 +7,7 @@ use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\PartidoController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/dashboard');
+Route::get('/', fn () => redirect()->route('dashboard'));
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
