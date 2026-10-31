@@ -405,15 +405,3 @@ tr:hover td {
 
 /* ROLES */
 .user-badge-readonly { background-color: var(--primary); color: #fff; }
-
-/* VISTA PREVIA ESTÁTICA */
-.preview-banner {
-    background-color: var(--primary-light);
-    border: 1px solid #fed7aa;
-    color: #9a3412;
-    border-radius: var(--radius);
-    padding: 14px 18px;
-    margin-bottom: 24px;
-    font-size: 0.9rem;
-    line-height: 1.55;
-}

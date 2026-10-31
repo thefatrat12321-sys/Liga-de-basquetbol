@@ -54,7 +54,8 @@ class PreviewCommandTest extends TestCase
         $index = File::get($this->salida.'/index.html');
         $this->assertStringContainsString('Halcones Dorados', $index);
         $this->assertStringContainsString('Tabla de Posiciones', $index);
-        $this->assertStringContainsString('Vista previa estática', $index);
+        $this->assertStringNotContainsString('Vista previa', $index);
+        $this->assertStringNotContainsString('preview-banner', $index);
 
         $partidos = File::get($this->salida.'/partidos.html');
         $this->assertStringContainsString('Coliseo Municipal Central', $partidos);
