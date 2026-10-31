@@ -253,7 +253,7 @@ public/css/style.css        Diseño (naranja / oscuro)
 php artisan test
 ```
 
-Resultado actual: **29 pruebas, 103 aserciones**. Cubren autenticación, autorización por
+Resultado actual: **29 pruebas, 104 aserciones**. Cubren autenticación, autorización por
 roles, CRUD de equipos y jugadores, reglas del marcador, cálculo de posiciones y la
 generación de la vista previa estática.
 
