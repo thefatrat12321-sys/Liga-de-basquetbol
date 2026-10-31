@@ -105,6 +105,22 @@ El seeder también carga 4 equipos, 8 jugadores y 4 partidos de ejemplo.
 
 ---
 
+## Documentación técnica
+
+El documento completo con arquitectura, modelo de datos, rutas, permisos, seguridad,
+instalación y despliegue está en
+[`doc/practica_liga.md`](doc/practica_liga.md).
+
+Incluye, entre otros:
+
+- Diagrama de capas y flujo de una petición.
+- Esquema de las tablas `users`, `equipos`, `jugadores` y `partidos`.
+- Las 25 rutas con su middleware y controlador.
+- Roles, Gates y reglas de validación.
+- Despliegue en `htdocs`, vista previa en Pages y solución de problemas.
+
+---
+
 ## Vista previa estática (GitHub Pages)
 
 GitHub Pages solo sirve archivos estáticos: **no ejecuta PHP ni Laravel**. Por eso el
