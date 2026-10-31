@@ -16,6 +16,9 @@ en tu equipo; GitHub solo publica una **vista previa estática** de solo lectura
 > ```bat
 > C:\xampp\php\php.exe -v
 > ```
+>
+> El proyecto fija `config.platform.php` a `8.2.12` en `composer.json`, así que las
+> dependencias de `vendor/` funcionan tanto con el PHP 8.2 de XAMPP como con 8.4.
 
 ---
 
@@ -104,7 +107,29 @@ Abre <http://127.0.0.1:8000>.
 
 ---
 
-## 6. Opcional: usar Apache en lugar de `artisan serve`
+## 6. Copiar la carpeta a `htdocs` (sin host virtual)
+
+La forma más rápida de usar el Apache de XAMPP: copia **toda** la carpeta del proyecto
+(incluyendo `.env` y `vendor/`) dentro de `htdocs`.
+
+```bat
+robocopy "C:\ruta\al\proyecto" "C:\xampp\htdocs\liga" /E
+```
+
+1. Arranca **Apache** y **MySQL** en el panel de XAMPP.
+2. Abre `http://localhost/liga/` (usa el nombre real de la carpeta).
+
+Los archivos `index.php` y `.htaccess` de la raíz permiten ejecutar Laravel desde ahí:
+sirven `public/css`, `public/js`, etc., envían el resto de rutas al front controller y
+bloquean `.env`, `vendor/` y las carpetas internas. **No hay que editar `httpd.conf`,
+`hosts` ni crear un host virtual**, y funciona con cualquier nombre de carpeta.
+
+> La base de datos no se copia: la copia de `htdocs` usa la misma base `liga_basquet`
+> del MySQL de XAMPP.
+
+---
+
+## 7. Opcional: usar Apache con un host virtual (`liga.local`)
 
 Si quieres entrar por `http://liga.local` sin dejar una terminal abierta:
 
@@ -145,7 +170,7 @@ Si quieres entrar por `http://liga.local` sin dejar una terminal abierta:
 
 ---
 
-## 7. Actualizar la vista previa de GitHub
+## 8. Actualizar la vista previa de GitHub
 
 Cuando modifiques equipos, jugadores o resultados en local:
 

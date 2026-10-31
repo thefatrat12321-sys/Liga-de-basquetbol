@@ -15,7 +15,7 @@ Este proyecto fue migrado desde una implementación PHP nativa (MVC + PDO) a **L
 | Capa | Tecnología |
 |---|---|
 | Framework | Laravel 12 |
-| Lenguaje | PHP 8.2+ (probado en 8.4) |
+| Lenguaje | PHP 8.2+ (probado en 8.2 y 8.4) |
 | Base de datos | MySQL 8 / MariaDB (XAMPP en local) · SQLite como alternativa |
 | ORM | Eloquent |
 | Vistas | Blade |
@@ -67,6 +67,23 @@ php -m
 
 La guía completa (extensiones, host virtual `liga.local`, solución de errores) está en
 [`deploy/xampp/LEEME.md`](deploy/xampp/LEEME.md).
+
+### Copiar la carpeta a `htdocs` (sin host virtual)
+
+También puedes ejecutar la app con el Apache de XAMPP sin tocar `httpd.conf` ni `hosts`:
+
+1. Copia **toda** la carpeta del proyecto dentro de `C:\xampp\htdocs` (por ejemplo
+   `C:\xampp\htdocs\liga`). Incluye `.env` y `vendor/` para que funcione directamente.
+2. Arranca **Apache** y **MySQL** en el panel de XAMPP.
+3. Abre `http://localhost/liga/` (cambia `liga` por el nombre real de la carpeta).
+
+El `index.php` y el `.htaccess` de la raíz se encargan de todo: sirven los archivos
+estáticos de `public/`, envían las rutas a Laravel y bloquean `.env`, `vendor/` y las
+carpetas internas. No hace falta configurar ningún host virtual.
+
+> El `vendor/` incluido está generado para **PHP 8.2** (`config.platform.php` en
+> `composer.json`), que es la versión que trae XAMPP. Si actualizas dependencias con otra
+> versión de PHP, ejecuta `composer install` con el PHP de XAMPP.
 
 ### Credenciales de demostración
 

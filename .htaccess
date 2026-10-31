@@ -1,0 +1,27 @@
+# Punto de entrada para XAMPP: copia esta carpeta dentro de htdocs y abre
+# http://localhost/<nombre-de-la-carpeta>. No requiere host virtual.
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Bloquear archivos y carpetas ocultas (.env, .git, .htaccess...)
+    RewriteRule (^|/)\. - [F,L]
+
+    # Bloquear carpetas internas del framework
+    RewriteRule ^(app|bootstrap|config|database|lang|resources|routes|storage|tests|vendor|deploy|doc)(/|$) - [F,L]
+
+    # Bloquear archivos de configuración de la raíz
+    RewriteRule ^(composer\.(json|lock|phar)|artisan|phpunit\.xml(\.dist)?)$ - [F,L]
+
+    # Servir los archivos estáticos desde public/
+    RewriteRule ^(css|js|build)/(.*)$ public/$1/$2 [END]
+    RewriteRule ^(favicon\.ico|robots\.txt)$ public/$1 [END]
+
+    # Enviar el resto de peticiones al front controller de Laravel
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [END]
+</IfModule>
