@@ -25,10 +25,10 @@ en tu equipo; GitHub solo publica una **vista previa estática** de solo lectura
 2. Entra en <http://localhost/phpmyadmin>.
 3. **Nueva** → nombre de la base: `liga_basquet` → cotejamiento `utf8mb4_unicode_ci` → **Crear**.
 
-También puedes crearla por consola:
+También puedes crearla por consola (ojo al puerto, aquí XAMPP usa **3307**):
 
 ```bat
-C:\xampp\mysql\bin\mysql.exe -u root -e "CREATE DATABASE IF NOT EXISTS liga_basquet CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+C:\xampp\mysql\bin\mysql.exe -h 127.0.0.1 -P 3307 -u root -e "CREATE DATABASE IF NOT EXISTS liga_basquet CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 ```
 
 ---
@@ -47,12 +47,17 @@ El `.env.example` ya viene con la configuración de XAMPP:
 ```dotenv
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
-DB_PORT=3306
+DB_PORT=3307
 DB_DATABASE=liga_basquet
 DB_USERNAME=root
 DB_PASSWORD=
 ```
 
+> **Importante — el puerto.** El puerto por defecto de MySQL es `3306`, pero si ya
+> tienes otro MySQL instalado, XAMPP arranca en `3307`. Para comprobar el tuyo:
+> Panel de XAMPP → **MySQL → Config → my.ini**, busca `port=`. Si dice `3306`,
+> cambia `DB_PORT` a `3306` en `.env`.
+>
 > XAMPP usa `root` sin contraseña por defecto. Si le pusiste una, escríbela en
 > `DB_PASSWORD`. Si prefieres no usar MySQL, comenta ese bloque y descomenta
 > `# DB_CONNECTION=sqlite`.
@@ -163,5 +168,6 @@ GitHub Pages tardará uno o dos minutos en reflejar los cambios.
 | `Access denied for user 'root'@'localhost'` | Revisa `DB_PASSWORD` en `.env` (por defecto vacío). |
 | `php` no se reconoce como comando | Usa `C:\xampp\php\php.exe` en lugar de `php`. |
 | `SQLSTATE[HY000] [2002]` | MySQL no está arrancado en el panel de XAMPP. |
+| `Connection refused` en el puerto 3307 | Revisa el puerto real en `my.ini` y ajústalo en `DB_PORT`. |
 | Cambios en `.env` sin efecto | Ejecuta `php artisan config:clear`. |
 | Página en blanco o error 500 | Revisa `storage/logs/laravel.log` y los permisos de `storage/` y `bootstrap/cache/`. |

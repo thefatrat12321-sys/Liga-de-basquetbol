@@ -61,6 +61,10 @@ php -m
 
 4. Abre <http://127.0.0.1:8000>.
 
+> **Puerto de MySQL:** `.env.example` usa `DB_PORT=3307` porque en este equipo el
+> 3306 está ocupado por otro MySQL. Comprueba el tuyo en **XAMPP → MySQL → Config →
+> my.ini** (`port=`) y ajusta `DB_PORT` si es diferente.
+
 La guía completa (extensiones, host virtual `liga.local`, solución de errores) está en
 [`deploy/xampp/LEEME.md`](deploy/xampp/LEEME.md).
 
